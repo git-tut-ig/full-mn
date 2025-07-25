@@ -1,0 +1,135 @@
+#tag::info[]
+openapi: 3.0.0 # <1>
+info: # <2>
+  description: This is a library API
+  version: 1.0.0
+  title: Library
+  license:
+    name: Apache-2.0
+    url: "https://www.apache.org/licenses/LICENSE-2.0.html"
+tags: # <3>
+  - name: books
+    description: Search for books and add new ones
+  - name: authors
+    description: Proxy for authors
+paths:
+  /books/search:
+    get: # <1>
+      tags: 
+        - books # <2>
+      summary: Search for a book
+      operationId: search # <3>
+      parameters: # <4>
+        - name: book-name
+          in: query
+          schema: 
+            type: string
+            minLength: 3 # <5>
+        - name: author-name
+          in: query
+          schema: 
+            type: string
+      responses: # <6>
+        "200": # <7>
+          description: Success
+          content:
+            "application/json":
+              schema:
+                type: array
+                items: 
+                  $ref: "#/components/schemas/BookInfo"
+        "400": # <8>
+          description: Bad Request
+  /books/add:
+    post: # <1>
+      tags: [books]
+      summary: Add a new book
+      operationId: addBook
+      requestBody: # <2>
+        required: true
+        content:
+          "application/json": 
+            schema: 
+              $ref: "#/components/schemas/BookInfo" # <3>
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Bad Request
+  /authors/search:
+    get:
+      tags:
+        - authors
+      summary: Search for an author
+      operationId: search
+      parameters:
+        - name: firstName
+          in: query
+          schema:
+            type: string
+        - name: secondName
+          in: query
+          schema:
+            type: string
+        - name: country
+          in: query
+          schema:
+            type: string
+        - name: countOfBooks
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Success
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Author"
+        "400":
+          description: Bad Request
+components:
+  schemas:
+    BookInfo:
+      title: Book Info # <1>
+      description: Object containg all the info about a book
+      type: object
+      properties: # <2>
+        name: {type: string}
+        availability: {$ref: "#/components/schemas/BookAvailability"} # <3>
+        author: {type: string, minLength: 3}
+        isbn: {type: string, pattern: "[0-9]{13}"}
+      required: ["name", "availability"]
+    BookAvailability: # <4>
+      type: string
+      enum: ["available", "not available", "reserved"]
+    Author:
+      title: Author Info
+      description: Information about author
+      type: object
+      properties:
+        firstName:
+          type: string
+        secondName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        biography:
+          type: string
+        countOfBooks:
+          type: integer
+        country:
+          $ref: "#/components/schemas/Country"
+      required: [ "firstName", "secondName", "dateOfBirth", "country" ]
+    Country:
+      type: string
+      enum:
+        - "USA"
+        - "Russia"
+        - "Germany"
+        - "China"
+        - "France"
+        - "Norway"

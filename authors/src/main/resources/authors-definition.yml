@@ -1,0 +1,76 @@
+openapi: 3.0.0
+info:
+  description: This is an Authors API
+  version: 1.0.0
+  title: Authors
+  license:
+    name: Apache-2.0
+    url: "https://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+  - name: authors
+    description: Search authors
+paths:
+  /authors/search:
+    get:
+      tags:
+        - authors
+      summary: Search for an author
+      operationId: search
+      parameters:
+        - name: firstName
+          in: query
+          schema:
+            type: string
+        - name: secondName
+          in: query
+          schema:
+            type: string
+        - name: country
+          in: query
+          schema:
+            type: string
+        - name: countOfBooks
+          in: query
+          schema:
+            type: integer
+      responses: # <6>
+        "200": # <7>
+          description: Success
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Author"
+        "400": # <8>
+          description: Bad Request
+components:
+  schemas:
+    Author:
+      title: Author Info
+      description: Information about author
+      type: object
+      properties:
+        firstName:
+          type: string
+        secondName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        biography:
+          type: string
+        countOfBooks:
+          type: integer
+        country:
+          $ref: "#/components/schemas/Country"
+      required: [ "firstName", "secondName", "dateOfBirth", "country" ]
+    Country:
+      type: string
+      enum:
+        - "USA"
+        - "Russia"
+        - "Germany"
+        - "China"
+        - "France"
+        - "Norway"

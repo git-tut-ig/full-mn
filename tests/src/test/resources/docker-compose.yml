@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-bookuser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bookpass}
+      POSTGRES_DB: ${POSTGRES_DB:-bookdb}
+    ports:
+      - "5432:5432"  # Exposed to host machine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - book-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-bookuser} -d ${POSTGRES_DB:-bookdb}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Authors Service (REST API)
+  authors:
+    image: authors:0.1
+    pull_policy: never
+    environment:
+      AUTHORS_TARGET_SCHEMA: http
+      AUTHORS_TARGET_HOST: wiremock
+      AUTHORS_TARGET_PORT: 8080
+
+      MICRONAUT_SERVER_PORT: 8080
+    ports:
+      - "8081:8080"  # Exposed to host machine as 8081
+    networks:
+      - book-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # Book Service (Connects to PostgreSQL and calls Authors service)
+  books:
+    image: books:0.1
+    pull_policy: never
+    ports:
+      - "8080:8080"  # Exposed to host machine
+    environment:
+      DATASOURCES_DEFAULT_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-bookdb}
+      DATASOURCES_DEFAULT_USERNAME: ${POSTGRES_USER:-bookuser}
+      DATASOURCES_DEFAULT_PASSWORD: ${POSTGRES_PASSWORD:-bookpass}
+      AUTHORS_TARGET_SCHEMA: http
+      AUTHORS_TARGET_HOST: authors
+      AUTHORS_TARGET_PORT: 8080
+      MICRONAUT_SERVER_PORT: 8080
+    networks:
+      - book-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      authors:
+        condition: service_started
+
+  wiremock:
+    image: wiremock/wiremock:latest
+    ports:
+      - "8082:8080"  # Externally accessible on 8082
+    volumes:
+      - ./wiremock/mappings:/home/wiremock/mappings  # Stub mappings
+      - ./wiremock/__files:/home/wiremock/__files    # Response files
+    networks:
+      - book-network
+    command: ["--verbose"]  # Enable verbose logging
+
+volumes:
+  postgres_data:
+    driver: local
+    driver_opts:
+        type: tmpfs
+        device: tmpfs
+
+networks:
+  book-network:
+    driver: bridge
+    name: book-app-network  # Gives a fixed name to the network
