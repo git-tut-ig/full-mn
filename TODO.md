@@ -21,3 +21,4 @@
 - [ ] Testing concept on all levels. Unit testing, Integration testing, prod-like env testing, data on prod-like env testing, testing in production
 - [ ] - For commit only
 - [ ] - For commit only 2
+- [ ] - For commit only 3
