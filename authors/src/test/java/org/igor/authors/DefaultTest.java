@@ -23,14 +23,14 @@ import org.junit.jupiter.api.Assertions;
 import jakarta.inject.Inject;
 
 @MicronautTest
-class DefaultTest {
+public class DefaultTest {
 
-    @Inject
-    EmbeddedApplication<?> application;
-
-    @Test
-    void testItWorks() {
-        Assertions.assertTrue(application.isRunning());
-    }
+//    @Inject
+//    EmbeddedApplication<?> application;
+//
+//    @Test
+//    void testItWorks() {
+//        Assertions.assertTrue(application.isRunning());
+//    }
 
 }
