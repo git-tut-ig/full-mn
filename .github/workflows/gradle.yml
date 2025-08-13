@@ -15,7 +15,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  BOOKS_IMAGE_NAME: books
+  BOOKS_IMAGE_NAME: full-mn/books
 
 jobs:
   build:
