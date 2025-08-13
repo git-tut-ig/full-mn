@@ -1,11 +1,9 @@
 plugins {
-    id("io.micronaut.application") version "4.5.4"
-    id("io.micronaut.openapi") version "4.5.4"
-    id("com.gradleup.shadow") version "8.3.7"
-    id("io.micronaut.test-resources") version "4.5.4"
-    id("io.micronaut.aot") version "4.5.4"
-    id("com.google.cloud.tools.jib") version '3.4.5'
-    //id("com.google.cloud.tools.jib")
+    id("io.micronaut.application")
+    id("io.micronaut.openapi")
+    id("io.micronaut.aot")
+    id("io.micronaut.test-resources")
+    id("io.micronaut.docker")
 }
 
 dependencies {
@@ -29,6 +27,11 @@ dependencies {
     runtimeOnly("org.flywaydb:flyway-database-postgresql")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("io.micronaut:micronaut-http-client")
+    //testImplementation("io.micronaut.controlpanel:micronaut-control-panel-ui:1.8.0")
+    //testImplementation("io.micronaut.controlpanel:micronaut-control-panel-management")
+    //testImplementation("io.micronaut:micronaut-management")
+    //testImplementation("org.testcontainers:testcontainers:1.21.3")
+    //testImplementation("org.testcontainers:postgresql:1.21.3")
 }
 
 application {
@@ -75,6 +78,19 @@ micronaut {
         }
     }
 }
+
+/*
+tasks.named("optimizedDockerBuild") {
+    images=["books-opt:latest", "books-opt:12345", "books-opt:$project.version"]
+
+}
+tasks.named("dockerBuildNative") {
+    images.add("books-native:latest")
+    images.add("books-native:12345")
+    images.add("books-native:$project.version")
+}
+
+*/
 
 
 

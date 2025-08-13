@@ -94,6 +94,8 @@ public class BooksController implements BooksApi {
             return bookRepository.findAllByAuthorContainsAndNameContains(author,name); // <4>
         }
     }
+
+    private final static String NN = "NN";
     //end::search[]
 //tag::footer[]
 }
