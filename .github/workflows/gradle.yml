@@ -15,7 +15,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  BOOKS_IMAGE_NAME: full-mn/books
+  BOOKS_IMAGE_NAME: git-tut-ig/books
 
 jobs:
   build:
