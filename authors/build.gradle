@@ -1,11 +1,7 @@
 plugins {
-    id("io.micronaut.application") version "4.5.4"
-    id("io.micronaut.openapi") version "4.5.4"
-    id("com.gradleup.shadow") version "8.3.7"
-    id("io.micronaut.test-resources") version "4.5.4"
-    id("io.micronaut.aot") version "4.5.4"
-    id("com.google.cloud.tools.jib") version '3.4.5'
-    //id("com.google.cloud.tools.jib")
+    id("io.micronaut.application")
+    id("io.micronaut.openapi")
+    id("io.micronaut.aot")
 }
 
 dependencies {
@@ -70,9 +66,6 @@ micronaut {
             useReactive = false
             useAuth = false
         }
-    }
-    testResources {
-        enabled = false
     }
 }
 

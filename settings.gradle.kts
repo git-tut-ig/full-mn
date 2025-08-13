@@ -6,8 +6,11 @@
  */
 
 plugins {
-    // Apply the foojay-resolver plugin to allow automatic download of JDKs
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
+    id("io.micronaut.application") version "4.5.4" apply false
+    id("io.micronaut.openapi") version "4.5.4" apply false
+    id("io.micronaut.aot") version "4.5.4" apply false
+    id("io.micronaut.test-resources") version "4.5.4" apply false
 }
 
 rootProject.name = "full-mn"
