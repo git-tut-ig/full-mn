@@ -66,6 +66,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
             type=ref,event=pr
+            type=raw,value=latest
           flavor: |
             latest=auto
 
