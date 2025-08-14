@@ -69,5 +69,9 @@ micronaut {
     }
 }
 
+tasks.named("optimizedDockerBuild") {
+    images=["ghcr.io/git-tut-ig/authors:latest"]
+}
+
 
 

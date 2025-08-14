@@ -23,8 +23,8 @@ services:
 
   # Authors Service (REST API)
   authors:
-    image: authors:0.1
-    pull_policy: never
+    image: ghcr.io/git-tut-ig/authors:latest
+    pull_policy: missing
     environment:
       AUTHORS_TARGET_SCHEMA: http
       AUTHORS_TARGET_HOST: wiremock
@@ -41,8 +41,8 @@ services:
 
   # Book Service (Connects to PostgreSQL and calls Authors service)
   books:
-    image: books:0.1
-    pull_policy: never
+    image: ghcr.io/git-tut-ig/books:latest
+    pull_policy: missing
     ports:
       - "8080:8080"  # Exposed to host machine
     environment:

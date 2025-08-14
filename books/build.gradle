@@ -49,6 +49,7 @@ repositories {
 
 graalvmNative.toolchainDetection = false
 
+
 micronaut {
     runtime("netty")
     testRuntime("junit5")
@@ -79,18 +80,6 @@ micronaut {
     }
 }
 
-/*
 tasks.named("optimizedDockerBuild") {
-    images=["books-opt:latest", "books-opt:12345", "books-opt:$project.version"]
-
+    images=["ghcr.io/git-tut-ig/books:latest"]
 }
-tasks.named("dockerBuildNative") {
-    images.add("books-native:latest")
-    images.add("books-native:12345")
-    images.add("books-native:$project.version")
-}
-
-*/
-
-
-
