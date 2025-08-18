@@ -18,6 +18,7 @@ dependencies {
     implementation("jakarta.validation:jakarta.validation-api")
     implementation("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("org.yaml:snakeyaml")
     testImplementation("io.micronaut:micronaut-http-client")
     testImplementation("org.wiremock:wiremock-jetty12:3.13.1")
     testImplementation("io.rest-assured:rest-assured:5.5.5")
