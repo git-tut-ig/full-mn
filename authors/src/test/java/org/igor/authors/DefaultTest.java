@@ -17,6 +17,7 @@ package org.igor.authors;
 
 import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -25,12 +26,12 @@ import jakarta.inject.Inject;
 @MicronautTest
 public class DefaultTest {
 
-//    @Inject
-//    EmbeddedApplication<?> application;
-//
-//    @Test
-//    void testItWorks() {
-//        Assertions.assertTrue(application.isRunning());
-//    }
+    @Inject
+    EmbeddedApplication<?> application;
+
+    @Test
+    void testItWorks() {
+        Assertions.assertTrue(application.isRunning());
+    }
 
 }
