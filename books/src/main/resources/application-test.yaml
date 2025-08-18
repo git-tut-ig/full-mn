@@ -1,0 +1,26 @@
+micronaut:
+  application:
+    name: books
+  server:
+    port: -1
+  security:
+    enabled: false
+
+context-path: /
+
+flyway:
+  datasources:
+    default:
+      enabled: true
+
+datasources:
+  default:
+    dialect: POSTGRES
+    driverClassName: ${JDBC_DRIVER:org.postgresql.Driver}
+
+authors:
+  target:
+    schema: http
+    host: localhost
+    port: 47777
+

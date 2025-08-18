@@ -26,6 +26,7 @@ dependencies {
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.flywaydb:flyway-database-postgresql")
     runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("org.yaml:snakeyaml")
     testImplementation("io.micronaut:micronaut-http-client")
     //testImplementation("io.micronaut.controlpanel:micronaut-control-panel-ui:1.8.0")
     //testImplementation("io.micronaut.controlpanel:micronaut-control-panel-management")

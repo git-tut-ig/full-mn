@@ -1,0 +1,15 @@
+micronaut:
+  application:
+    name: books
+  server:
+    port: -1
+  security:
+    enabled: false
+
+context-path: /
+
+authors:
+  target:
+    schema: http
+    host: localhost
+    port: 46666
