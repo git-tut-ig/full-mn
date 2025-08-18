@@ -23,7 +23,7 @@ services:
 
   # Authors Service (REST API)
   authors:
-    image: authors:0.1
+    image: authors:latest
     pull_policy: never
     environment:
       AUTHORS_TARGET_SCHEMA: http
@@ -41,7 +41,7 @@ services:
 
   # Book Service (Connects to PostgreSQL and calls Authors service)
   books:
-    image: books:0.1
+    image: books:latest
     pull_policy: never
     ports:
       - "8080:8080"  # Exposed to host machine
