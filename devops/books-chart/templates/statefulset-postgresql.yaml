@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgresql
+  labels:
+    {{- include "books-chart.labels" . | nindent 4 }}
+spec:
+  serviceName: postgresql
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresql
+  template:
+    metadata:
+      labels:
+        app: postgresql
+        {{- include "books-chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: postgresql
+          image: {{ .Values.postgresql.image }}
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresql.secret.name }}
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresql.secret.name }}
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.postgresql.config.name }}
+                  key: database.name
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgresql-storage
+              mountPath: /var/lib/postgresql/data
+          livenessProbe:
+            exec:
+              command: [ "pg_isready", "-U", "{{ .Values.postgresql.username }}" ]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            exec:
+              command: [ "pg_isready", "-U", "{{ .Values.postgresql.username }}" ]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+  volumeClaimTemplates:
+    - metadata:
+        name: postgresql-storage
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: local-postgresql
+        resources:
+          requests:
+            storage: {{ .Values.postgresql.storageSize }}

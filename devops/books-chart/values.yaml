@@ -1,0 +1,62 @@
+# Postgresql configuration
+postgresql:
+  image: postgres:15-alpine
+  storageSize: 1Gi
+  service:
+    port: 5432
+  secret:
+    name: secret-database-1.0
+    username: postgres
+    password: postgres-password
+  config:
+    name: config-database-1.0
+    database: books
+
+# Persistence configuration
+persistence:
+  local:
+    enabled: true
+    path: /var/lib/rancher/k3s/storage
+    nodeName: k3d-boot-agent-0
+
+# Books application configuration
+books:
+  image: ghcr.io/git-tut-ig/books:latest
+  replicaCount: 1
+  serverPort: 8080
+  service:
+    type: LoadBalancer
+    port: 80
+    nodePort: 30093
+  authorsref:
+    host: authors
+    port: 80
+
+# Authors application configuration
+authors:
+  image: ghcr.io/git-tut-ig/authors:latest
+  replicaCount: 1
+  serverPort: 8080
+  service:
+    type: ClusterIP
+    port: 80
+  authorsref:
+    host: wiremock
+    port: 80
+
+# WireMock configuration
+wiremock:
+  image: wiremock/wiremock:latest
+  replicaCount: 1
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 8080
+  stubConfigPath: /home/wiremock
+  config:
+    mappingsname: config-wiremock-mappings-1.0
+    filesname: config-wiremock-files-1.0
+
+# Storage configuration
+storage:
+  localPath: /data/postgresql

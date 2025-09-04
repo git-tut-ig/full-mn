@@ -1,0 +1,26 @@
+[
+  {
+    "firstName": "{{request.query.firstName}}",
+    "secondName": "Chehov",
+    "dateOfBirth": "2025-07-23",
+    "country": "{{request.query.country}}",
+    "biography": "A long time ago.....",
+    "countOfBooks": 20
+  },
+  {
+    "firstName": "{{request.query.firstName}}",
+    "secondName": "Antonov",
+    "dateOfBirth": "2025-07-23",
+    "country": "{{request.query.country}}",
+    "biography": "A long time ago.....",
+    "countOfBooks": 35
+  },
+  {
+    "firstName": "{{request.query.firstName}} VVV",
+    "secondName": "Antonov",
+    "dateOfBirth": "2025-07-23",
+    "country": "{{request.query.country}}",
+    "biography": "A long time ago.....",
+    "countOfBooks": 2
+  }
+]

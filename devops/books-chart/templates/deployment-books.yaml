@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: books
+  labels:
+    {{- include "books-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.books.replicaCount }}
+  selector:
+    matchLabels:
+      app: books
+  template:
+    metadata:
+      labels:
+        app: books
+        {{- include "books-chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: books
+        image: {{ .Values.books.image }}
+        ports:
+        - containerPort: {{ .Values.books.serverPort }}
+        env:
+        - name: DATASOURCES_DEFAULT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgresql.secret.name }}
+              key: username
+        - name: DATASOURCES_DEFAULT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgresql.secret.name }}
+              key: password
+        - name: DATABASE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.postgresql.config.name }}
+              key: database.name
+        - name: DATASOURCES_DEFAULT_URL
+          value: "jdbc:postgresql://postgresql-0.postgresql:5432/$(DATABASE_NAME)"
+        - name: MICRONAUT_SERVER_PORT
+          value: {{ .Values.books.serverPort | quote }}
+        - name: AUTHORS_TARGET_HOST
+          value: {{ .Values.books.authorsref.host | quote }}
+        - name: AUTHORS_TARGET_PORT
+          value: {{ .Values.books.authorsref.port | quote }}

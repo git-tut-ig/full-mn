@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.wiremock.config.mappingsname }}
+  labels:
+    {{- include "books-chart.labels" . | nindent 4 }}
+data:
+  example-mapping.json: |-
+{{ .Files.Get "wiremock-stubs/mappings/example-mapping.json" | indent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.wiremock.config.filesname }}
+  labels:
+    {{- include "books-chart.labels" . | nindent 4 }}
+data:
+  authors-search-parameters-response.json: |-
+{{ .Files.Get "wiremock-stubs/__files/authors-search-parameters-response.json" | indent 4 }}
