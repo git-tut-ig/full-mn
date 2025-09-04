@@ -23,16 +23,12 @@ dependencies {
     implementation("io.swagger.core.v3:swagger-annotations")
     implementation("jakarta.validation:jakarta.validation-api")
     implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-prometheus")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.flywaydb:flyway-database-postgresql")
     runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("org.yaml:snakeyaml")
     testImplementation("io.micronaut:micronaut-http-client")
-    //testImplementation("io.micronaut.controlpanel:micronaut-control-panel-ui:1.8.0")
-    //testImplementation("io.micronaut.controlpanel:micronaut-control-panel-management")
-    //testImplementation("io.micronaut:micronaut-management")
-    //testImplementation("org.testcontainers:testcontainers:1.21.3")
-    //testImplementation("org.testcontainers:postgresql:1.21.3")
 }
 
 application {
