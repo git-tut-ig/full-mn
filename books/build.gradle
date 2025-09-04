@@ -23,6 +23,7 @@ dependencies {
     implementation("io.swagger.core.v3:swagger-annotations")
     implementation("jakarta.validation:jakarta.validation-api")
     implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-management")
     implementation("io.micronaut.micrometer:micronaut-micrometer-registry-prometheus")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.flywaydb:flyway-database-postgresql")
@@ -75,19 +76,6 @@ micronaut {
         }
     }
 }
-
-/*
-tasks.named("optimizedDockerBuild") {
-    images=["books-opt:latest", "books-opt:12345", "books-opt:$project.version"]
-
-}
-tasks.named("dockerBuildNative") {
-    images.add("books-native:latest")
-    images.add("books-native:12345")
-    images.add("books-native:$project.version")
-}
-
-*/
 
 
 
