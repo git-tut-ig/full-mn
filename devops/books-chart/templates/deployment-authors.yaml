@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authors
+  labels:
+    {{- include "books-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.authors.replicaCount }}
+  selector:
+    matchLabels:
+      app: authors
+  template:
+    metadata:
+      labels:
+        app: authors
+        {{- include "books-chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: authors
+          image: {{ .Values.authors.image }}
+          ports:
+            - containerPort: {{ .Values.authors.serverPort }}
+          env:
+            - name: MICRONAUT_SERVER_PORT
+              value: {{ .Values.authors.serverPort | quote }}
+            - name: AUTHORS_TARGET_HOST
+              value: {{ .Values.authors.authorsref.host | quote }}
+            - name: AUTHORS_TARGET_PORT
+              value: {{ .Values.authors.authorsref.port | quote }}

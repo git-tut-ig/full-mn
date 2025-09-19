@@ -1,0 +1,18 @@
+[
+  {
+    "firstName": "Ivan",
+    "secondName": "Ivanov",
+    "dateOfBirth": "2025-07-23",
+    "country": "Russia",
+    "biography": "A long time ago.....",
+    "countOfBooks": 10
+  },
+  {
+    "firstName": "Ivan 2",
+    "secondName": "Ivanov 2",
+    "dateOfBirth": "2025-07-23",
+    "country": "Russia",
+    "biography": "A long time ago.....",
+    "countOfBooks": 5
+  }
+]

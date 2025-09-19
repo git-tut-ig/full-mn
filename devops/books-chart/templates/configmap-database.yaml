@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.postgresql.config.name }}
+  labels:
+    {{- include "books-chart.labels" . | nindent 4 }}
+data:
+  database.name: {{ .Values.postgresql.config.database | quote }}

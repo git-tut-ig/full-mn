@@ -5,6 +5,17 @@ micronaut:
     port: 8080
   security:
     enabled: false
+  metrics:
+    enabled: true
+    export:
+      prometheus:
+        enabled: true
+        step: PT1M
+        descriptions: true
+
+endpoints:
+  prometheus:
+    sensitive: false
 
 context-path: /
 
@@ -23,4 +34,3 @@ authors:
     schema: http
     host: localhost
     port: 47777
-

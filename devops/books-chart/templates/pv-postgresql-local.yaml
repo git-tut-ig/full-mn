@@ -1,0 +1,27 @@
+{{- if .Values.persistence.local.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgresql-pv
+  labels:
+    type: local
+    {{- include "books-chart.labels" . | nindent 4 }}
+spec:
+  capacity:
+    storage: {{ .Values.postgresql.storageSize }}
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-postgresql
+  local:
+    path: {{ .Values.persistence.local.path }}/postgresql
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - {{ .Values.persistence.local.nodeName | default "k3d-server-0" }}
+  {{- end }}

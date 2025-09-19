@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wiremock
+  labels:
+    {{- include "books-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.wiremock.replicaCount }}
+  selector:
+    matchLabels:
+      app: wiremock
+  template:
+    metadata:
+      labels:
+        app: wiremock
+        {{- include "books-chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: wiremock
+          image: {{ .Values.wiremock.image }}
+          ports:
+            - containerPort: {{ .Values.wiremock.service.targetPort }}
+          volumeMounts:
+            - name: wiremock-mappings
+              mountPath: {{ .Values.wiremock.stubConfigPath }}/mappings
+            - name: wiremock-files
+              mountPath: {{ .Values.wiremock.stubConfigPath }}/__files
+      volumes:
+        - name: wiremock-mappings
+          configMap:
+            name: {{ .Values.wiremock.config.mappingsname }}
+        - name: wiremock-files
+          configMap:
+            name: {{ .Values.wiremock.config.filesname }}
